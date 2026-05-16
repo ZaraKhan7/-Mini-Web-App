@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZYRA | Luxury Eastern Wear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">ZYRA</div>
+        <nav class="nav-links">
+            <a href="#" class="active">New In</a>
+            <a href="#">Pret</a>
+            <a href="#">Unstitched</a>
+            <a href="#">Wedding Festive</a>
+        </nav>
+        <div class="cart-trigger" onclick="toggleCart()">
+            Bag (<span id="cart-count">0</span>)
+        </div>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>The Festive Edit</h1>
+            <p>Timeless silhouettes, intricate mirror-work, and heritage embroideries.</p>
+        </div>
+    </section>
+    <main>
+        <h2 class="section-title">Current Collection</h2>
+        <section id="product-container" class="product-grid"></section>
+    </main>
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Bag</h3>
+            <button class="close-btn" onclick="toggleCart()">✕</button>
+        </div>
+        <div id="cart-items" class="cart-items-container">
+        </div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Total:</span>
+                <span>PKR <span id="cart-total-price">0</span></span>
+            </div>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About ZYRA</h4>
+                <p>Rooted in heritage, ZYRA brings traditional Pakistani craftsmanship alive through premium contemporary pret, luxury unstitched lawn, and majestic festive couture.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Care</h4>
+                <ul>
+                    <li><a href="#">Track Your Order</a></li>
+                    <li><a href="#">Shipping & Deliveries</a></li>
+                    <li><a href="#">Exchange & Returns</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Sizing Guide</a></li>
+                    <li><a href="#">Luxury Unstitched</a></li>
+                    <li><a href="#">Ready To Wear</a></li>
+                    <li><a href="#">Wedding Edit</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ZYRA Luxury Wear. All Rights Reserved. Dev Portfolio Value Accent.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
