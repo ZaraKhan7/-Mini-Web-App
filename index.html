@@ -4,50 +4,207 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZYRA | Luxury Eastern Wear</title>
+    <meta name="description" content="ZYRA — premium contemporary pret, luxury unstitched lawn, and majestic festive couture.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Segoe+UI:wght@400;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+
         <div class="logo">ZYRA</div>
-        <nav class="nav-links">
-            <a href="#" class="active">New In</a>
-            <a href="#">Pret</a>
-            <a href="#">Unstitched</a>
-            <a href="#">Wedding Festive</a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#" class="nav-filter active" data-category="All">New In</a>
+            <a href="#" class="nav-filter" data-category="Pret">Pret</a>
+            <a href="#" class="nav-filter" data-category="Unstitched">Unstitched</a>
+            <a href="#" class="nav-filter" data-category="Wedding Festive">Wedding Festive</a>
+            <a href="#" class="nav-filter" data-category="Luxury Collection">Luxury Collection</a>
         </nav>
-        <div class="cart-trigger" onclick="toggleCart()">
-            Bag (<span id="cart-count">0</span>)
+
+        <div class="header-actions">
+            <div class="search-wrap">
+                <button class="icon-btn" id="searchToggle" aria-label="Open search">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search dresses…" aria-label="Search products">
+            </div>
+
+            <button class="icon-btn wishlist-trigger" id="wishlistTrigger" aria-label="View wishlist">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+                <span class="badge" id="wishlist-count">0</span>
+            </button>
+
+            <button class="icon-btn cart-trigger" id="cartTrigger" aria-label="View shopping bag">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span class="badge" id="cart-count">0</span>
+            </button>
         </div>
     </header>
+
     <section class="hero">
         <div class="hero-content">
-            <h1>The Festive Edit</h1>
-            <p>Timeless silhouettes, intricate mirror-work, and heritage embroideries.</p>
+            <p class="hero-eyebrow">The 2026 Festive Edit</p>
+            <h1>Timeless Silhouettes,<br>Heritage Embroidery</h1>
+            <p class="hero-sub">Intricate mirror-work and handcrafted couture, made for the modern woman.</p>
+            <a href="#product-container" class="hero-btn">Shop The Collection</a>
         </div>
     </section>
+
     <main>
-        <h2 class="section-title">Current Collection</h2>
-        <section id="product-container" class="product-grid"></section>
+        <div class="toolbar">
+            <h2 class="section-title">Current Collection</h2>
+
+            <div class="toolbar-controls">
+                <div class="filter-chips" id="filterChips">
+                    <button class="chip active" data-category="All">All</button>
+                    <button class="chip" data-category="Pret">Pret</button>
+                    <button class="chip" data-category="Unstitched">Unstitched</button>
+                    <button class="chip" data-category="Wedding Festive">Wedding Festive</button>
+                    <button class="chip" data-category="Luxury Collection">Luxury Collection</button>
+                </div>
+
+                <select id="sortSelect" class="sort-select" aria-label="Sort products">
+                    <option value="default">Sort: Featured</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name-asc">Name: A–Z</option>
+                    <option value="name-desc">Name: Z–A</option>
+                </select>
+            </div>
+        </div>
+
+        <p id="resultsMeta" class="results-meta"></p>
+
+        <section id="product-container" class="product-grid" aria-live="polite"></section>
+        <p id="noResults" class="no-results" hidden>No pieces match your search — try another keyword or filter.</p>
     </main>
-    <div id="cart-sidebar" class="cart-sidebar">
+
+    <div id="productModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalProductName" hidden>
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" aria-label="Close product details">✕</button>
+            <div class="modal-grid">
+                <div class="modal-img-wrap">
+                    <img id="modalImg" src="" alt="">
+                </div>
+                <div class="modal-details">
+                    <p class="modal-category" id="modalCategory"></p>
+                    <h2 id="modalProductName"></h2>
+                    <div class="modal-rating" id="modalRating"></div>
+                    <p class="modal-price" id="modalPrice"></p>
+                    <p class="modal-desc" id="modalDesc"></p>
+
+                    <div class="modal-field">
+                        <span class="modal-field-label">Size</span>
+                        <div class="size-options" id="sizeOptions"></div>
+                    </div>
+
+                    <div class="modal-field">
+                        <span class="modal-field-label">Quantity</span>
+                        <div class="qty-selector">
+                            <button id="qtyMinus" aria-label="Decrease quantity">−</button>
+                            <span id="qtyValue">1</span>
+                            <button id="qtyPlus" aria-label="Increase quantity">+</button>
+                        </div>
+                    </div>
+
+                    <p class="modal-stock" id="modalStock"></p>
+
+                    <div class="modal-actions">
+                        <button class="add-btn modal-add-btn" id="modalAddBtn">Add to Bag</button>
+                        <button class="wishlist-btn" id="modalWishlistBtn" aria-label="Add to wishlist">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-sidebar" class="cart-sidebar" role="dialog" aria-label="Shopping bag">
         <div class="cart-header">
             <h3>Shopping Bag</h3>
-            <button class="close-btn" onclick="toggleCart()">✕</button>
+            <button class="close-btn" id="cartClose" aria-label="Close bag">✕</button>
         </div>
-        <div id="cart-items" class="cart-items-container">
-        </div>
+        <div id="cart-items" class="cart-items-container"></div>
         <div class="cart-footer">
+            <div class="total-row sub-row">
+                <span>Items:</span>
+                <span id="cart-item-count">0</span>
+            </div>
             <div class="total-row">
                 <span>Total:</span>
                 <span>PKR <span id="cart-total-price">0</span></span>
             </div>
-            <button class="checkout-btn">Proceed to Checkout</button>
+            <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
         </div>
     </div>
-    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+    <div id="wishlist-sidebar" class="cart-sidebar wishlist-sidebar" role="dialog" aria-label="Wishlist">
+        <div class="cart-header">
+            <h3>Wishlist</h3>
+            <button class="close-btn" id="wishlistClose" aria-label="Close wishlist">✕</button>
+        </div>
+        <div id="wishlist-items" class="cart-items-container"></div>
+    </div>
+
+    <div id="overlay" class="cart-overlay"></div>
+
+    <div id="checkoutModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" hidden>
+        <div class="modal-box checkout-box">
+            <button class="modal-close" id="checkoutClose" aria-label="Close checkout">✕</button>
+
+            <div id="checkoutForm">
+                <h2 id="checkoutTitle">Checkout</h2>
+                <form id="orderForm" novalidate>
+                    <div class="form-grid">
+                        <label class="form-field">
+                            <span>Full Name</span>
+                            <input type="text" id="custName" required>
+                        </label>
+                        <label class="form-field">
+                            <span>Email</span>
+                            <input type="email" id="custEmail" required>
+                        </label>
+                        <label class="form-field">
+                            <span>Phone Number</span>
+                            <input type="tel" id="custPhone" required>
+                        </label>
+                        <label class="form-field full-width">
+                            <span>Delivery Address</span>
+                            <textarea id="custAddress" rows="3" required></textarea>
+                        </label>
+                    </div>
+
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div id="orderSummaryItems"></div>
+                        <div class="total-row">
+                            <span>Total:</span>
+                            <span>PKR <span id="orderTotal">0</span></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="checkout-btn">Place Order</button>
+                </form>
+            </div>
+
+            <div id="checkoutSuccess" class="checkout-success" hidden>
+                <div class="success-icon">✓</div>
+                <h2>Order Placed!</h2>
+                <p>Thank you, <span id="successName"></span>. A confirmation has been sent to <span id="successEmail"></span>. Your festive edit is on its way.</p>
+                <button class="hero-btn" id="successClose">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
     <footer>
         <div class="footer-container">
             <div class="footer-section">
@@ -74,9 +231,10 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 ZYRA Luxury Wear. All Rights Reserved. Dev Portfolio Value Accent.</p>
+            <p>&copy; 2026 ZYRA Luxury Wear. All Rights Reserved.</p>
         </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
